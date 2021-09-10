@@ -12,7 +12,14 @@ class Story {
    *   - {title, author, url, username, storyId, createdAt}
    */
 
-  constructor({ storyId, title, author, url, username, createdAt }) {
+  constructor({
+    storyId,
+    title,
+    author,
+    url,
+    username,
+    createdAt
+  }) {
     this.storyId = storyId;
     this.title = title;
     this.author = author;
@@ -73,22 +80,38 @@ class StoryList {
    * Returns the new Story instance
    */
   //storyId, title, author, url, username, createdAt
-  async addStory( user, newStory) {
+  async addStory(user, newStory) {
     // UNIMPLEMENTED: complete this function!
-    let {title,author,url}=newStory;
-    axios({
-      method:'POST',
+    let {
+      title,
+      author,
+      url
+    } = newStory;
+
+   let result= await axios({
+      method: 'POST',
       url: `${BASE_URL}/stories`,
-      data:{
+      data: {
         "token": user.loginToken,
-        "story":{
+        "story": {
           "author": author,
           "title": title,
-          "url":url
+          "url": url
         }
       }
     })
-    return new Story({title,author,url})
+    let data=result.data.story
+return new Story({
+  storyId:data.storyId,
+  title:data.title,
+  author:data.author,
+  url:data.url,
+  username:data.username,
+  createdAt:data.createdAt
+
+})
+   
+   
 
   }
 }
@@ -105,13 +128,13 @@ class User {
    */
 
   constructor({
-                username,
-                name,
-                createdAt,
-                favorites = [],
-                ownStories = []
-              },
-              token) {
+      username,
+      name,
+      createdAt,
+      favorites = [],
+      ownStories = []
+    },
+    token) {
     this.username = username;
     this.name = name;
     this.createdAt = createdAt;
@@ -135,13 +158,20 @@ class User {
     const response = await axios({
       url: `${BASE_URL}/signup`,
       method: "POST",
-      data: { user: { username, password, name } },
+      data: {
+        user: {
+          username,
+          password,
+          name
+        }
+      },
     });
 
-    let { user } = response.data
+    let {
+      user
+    } = response.data
 
-    return new User(
-      {
+    return new User({
         username: user.username,
         name: user.name,
         createdAt: user.createdAt,
@@ -162,13 +192,19 @@ class User {
     const response = await axios({
       url: `${BASE_URL}/login`,
       method: "POST",
-      data: { user: { username, password } },
+      data: {
+        user: {
+          username,
+          password
+        }
+      },
     });
 
-    let { user } = response.data;
+    let {
+      user
+    } = response.data;
 
-    return new User(
-      {
+    return new User({
         username: user.username,
         name: user.name,
         createdAt: user.createdAt,
@@ -188,13 +224,16 @@ class User {
       const response = await axios({
         url: `${BASE_URL}/users/${username}`,
         method: "GET",
-        params: { token },
+        params: {
+          token
+        },
       });
 
-      let { user } = response.data;
+      let {
+        user
+      } = response.data;
 
-      return new User(
-        {
+      return new User({
           username: user.username,
           name: user.name,
           createdAt: user.createdAt,
