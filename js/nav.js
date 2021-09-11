@@ -1,5 +1,7 @@
 "use strict";
 
+//const { assertExpressionStatement } = require("@babel/types");
+
 /******************************************************************************
  * Handling navbar clicks and updating navbar
  */
@@ -48,4 +50,5 @@ function showStoryForm() {
 }
 
 $navSubmit.on('click',showStoryForm)
+
 

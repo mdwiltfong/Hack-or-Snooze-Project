@@ -34,6 +34,7 @@ class Story {
     // UNIMPLEMENTED: complete this function!
     return "hostname.com";
   }
+
 }
 
 
@@ -88,7 +89,7 @@ class StoryList {
       url
     } = newStory;
 
-   let result= await axios({
+    let result = await axios({
       method: 'POST',
       url: `${BASE_URL}/stories`,
       data: {
@@ -100,19 +101,23 @@ class StoryList {
         }
       }
     })
-    let data=result.data.story
-return new Story({
-  storyId:data.storyId,
-  title:data.title,
-  author:data.author,
-  url:data.url,
-  username:data.username,
-  createdAt:data.createdAt
+    let data = result.data.story
+    return new Story({
+      storyId: data.storyId,
+      title: data.title,
+      author: data.author,
+      url: data.url,
+      username: data.username,
+      createdAt: data.createdAt
 
-})
-   
-   
-
+    })
+  }
+  async addFavorite(user, storyId) {
+    let result = await axios({
+      url:`${BASE_URL}/users/${user.username}/favorites/${storyId}`,
+      method:"POST",
+      data:{token:user.loginToken}
+    })
   }
 }
 
@@ -188,7 +193,7 @@ class User {
    */
 
   static async login(username, password) {
-    try{
+    try {
       const response = await axios({
         url: `${BASE_URL}/login`,
         method: "POST",
@@ -199,11 +204,11 @@ class User {
           }
         },
       });
-  
+
       let {
         user
       } = response.data;
-  
+
       return new User({
           username: user.username,
           name: user.name,
@@ -213,7 +218,7 @@ class User {
         },
         response.data.token
       );
-    }catch(e){
+    } catch (e) {
       throw Error(`Incorrect username or password`)
     }
   }
