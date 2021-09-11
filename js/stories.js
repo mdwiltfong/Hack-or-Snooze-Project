@@ -65,7 +65,8 @@ async function submitStory() {
 
  console.log(newStory)
  let result = await storyList.addStory(currentUser,newStory);
-  
+ $storyForm.slideUp("slow");
+ $storyForm.trigger("reset");
 }
 
 $storyForm.on('submit',(evt)=>{
