@@ -35,6 +35,7 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
   $loginForm.hide();
   $signupForm.hide();
+  $navSubmit.show()
 }
 
 //** Update DOM to show Story Form */
