@@ -25,6 +25,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+     <span class="star"> <i class="far fa-plus-square fav"></i></span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -73,3 +74,14 @@ $storyForm.on('submit',(evt)=>{
 evt.preventDefault();
 submitStory()
 })
+
+
+function changeIcon(evt){
+let $li=evt.target.closest('i');
+console.log($li)
+
+}
+
+
+$('#all-stories-list').on('dblclick',changeIcon)
+
