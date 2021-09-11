@@ -113,11 +113,17 @@ class StoryList {
     })
   }
   async addFavorite(user, storyId) {
-    let result = await axios({
-      url:`${BASE_URL}/users/${user.username}/favorites/${storyId}`,
-      method:"POST",
-      data:{token:user.loginToken}
-    })
+    try{
+      let result = await axios({
+        url:`${BASE_URL}/users/${user.username}/favorites/${storyId}`,
+        method:"POST",
+        data:{token:user.loginToken}
+      })
+      return {...result,id:storyId}
+      console.log('Favorite Added')
+    }catch(e){
+      return e
+    }
   }
 }
 

@@ -2,7 +2,7 @@
 
 // This is the global list of the stories, an instance of StoryList
 let storyList;
-
+let favorites=[];
 /** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
@@ -56,36 +56,37 @@ function putStoriesOnPage() {
 /** Submit story from form */
 
 async function submitStory() {
-  
- let form =$storyForm;
- let newStory={
-  title:`${form[0][0].value}`,
-  author:`${form[0][1].value}`,
-  url:`${form[0][2].value}`
- }
 
- console.log(newStory)
- let result = await storyList.addStory(currentUser,newStory);
- $storyForm.slideUp("slow");
- $storyForm.trigger("reset");
+  let form = $storyForm;
+  let newStory = {
+    title: `${form[0][0].value}`,
+    author: `${form[0][1].value}`,
+    url: `${form[0][2].value}`
+  }
+
+  console.log(newStory)
+  let result = await storyList.addStory(currentUser, newStory);
+  $storyForm.slideUp("slow");
+  $storyForm.trigger("reset");
 }
 
-$storyForm.on('submit',(evt)=>{
-evt.preventDefault();
-submitStory()
+$storyForm.on('submit', (evt) => {
+  evt.preventDefault();
+  submitStory()
 })
 
 
-function changeIcon(evt){
-const $i=$(evt.target).closest('i');
-$i.addClass('fas')
-
-
-
-console.log($i)
-
+async function changeIcon(evt) {
+  console.log(`changeIcon`);
+  const $tg=$(evt.target);
+  const storyId = $tg.closest('li').attr('id');
+  const $i = $tg.closest('i');
+  $i.addClass('fas')
+  if(!favorites.includes(storyId)){
+    let favorite=await storyList.addFavorite(currentUser,storyId);
+    favorites.push(favorite.id)
+  }
 }
 
 
-$('#all-stories-list').on('dblclick',changeIcon)
-
+$('#all-stories-list').on('dblclick', changeIcon)
