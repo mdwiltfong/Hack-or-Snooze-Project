@@ -188,30 +188,34 @@ class User {
    */
 
   static async login(username, password) {
-    const response = await axios({
-      url: `${BASE_URL}/login`,
-      method: "POST",
-      data: {
-        user: {
-          username,
-          password
-        }
-      },
-    });
-
-    let {
-      user
-    } = response.data;
-
-    return new User({
-        username: user.username,
-        name: user.name,
-        createdAt: user.createdAt,
-        favorites: user.favorites,
-        ownStories: user.stories
-      },
-      response.data.token
-    );
+    try{
+      const response = await axios({
+        url: `${BASE_URL}/login`,
+        method: "POST",
+        data: {
+          user: {
+            username,
+            password
+          }
+        },
+      });
+  
+      let {
+        user
+      } = response.data;
+  
+      return new User({
+          username: user.username,
+          name: user.name,
+          createdAt: user.createdAt,
+          favorites: user.favorites,
+          ownStories: user.stories
+        },
+        response.data.token
+      );
+    }catch(e){
+      throw Error(`Incorrect username or password`)
+    }
   }
 
   /** When we already have credentials (token & username) for a user,
