@@ -116,7 +116,6 @@ return new Story({
   }
 }
 
-
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
  */
