@@ -25,7 +25,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-     <span class="star"> <i class="far fa-plus-square fav"></i></span>
+     <span class="star"> <i class="far fa-star"></i></span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -77,8 +77,12 @@ submitStory()
 
 
 function changeIcon(evt){
-let $li=evt.target.closest('i');
-console.log($li)
+const $i=$(evt.target).closest('i');
+$i.addClass('fas')
+
+
+
+console.log($i)
 
 }
 
