@@ -42,8 +42,10 @@ function updateNavOnLogin() {
 
 function showStoryForm() {
   console.log(`show form`);
-  $('#story-form').show();
+  $storyForm.show();
   $allStoriesList.hide();
+
 }
 
 $navSubmit.on('click',showStoryForm)
+

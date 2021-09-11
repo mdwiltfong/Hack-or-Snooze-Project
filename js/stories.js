@@ -50,3 +50,25 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+
+/** Submit story from form */
+
+async function submitStory() {
+  
+ let form =$storyForm;
+ let newStory={
+  title:`${form[0][0].value}`,
+  author:`${form[0][1].value}`,
+  url:`${form[0][2].value}`
+ }
+
+ console.log(newStory)
+ let result = await storyList.addStory(currentUser,newStory);
+  
+}
+
+$storyForm.on('submit',(evt)=>{
+evt.preventDefault();
+submitStory()
+})
