@@ -39,7 +39,7 @@ function updateNavOnLogin() {
 
 function showStoryForm() {
   console.log(`show form`);
-  $('form').show();
+  $('#story-form').show();
   $allStoriesList.hide();
 }
 
