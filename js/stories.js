@@ -3,12 +3,12 @@
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 let favorites=[];
+
 /** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
-
   putStoriesOnPage();
 }
 
@@ -24,9 +24,12 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+  let cls;
+  cls=favorites.includes(story.storyId) ? "fas":" ";
+  console.log(cls)
   return $(`
       <li id="${story.storyId}">
-     <span class="star"> <i class="far fa-star"></i></span>
+     <span class="star"><i class="far fa-star ${cls}"></i></span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>

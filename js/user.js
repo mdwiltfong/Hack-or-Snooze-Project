@@ -12,7 +12,6 @@ let currentUser;
 async function login(evt) {
   console.debug("login", evt);
   evt.preventDefault();
-
   // grab the username and password
   const username = $("#login-username").val();
   const password = $("#login-password").val();
@@ -20,7 +19,10 @@ async function login(evt) {
   // User.login retrieves user info from API and returns User instance
   // which we'll make the globally-available, logged-in user.
   currentUser = await User.login(username, password);
-
+  let storedFavorites=currentUser.favorites;
+  storedFavorites.forEach((favorite)=>{
+    favorites.push(favorite.storyId)
+  })
   $loginForm.trigger("reset");
 
   saveUserCredentialsInLocalStorage();
@@ -107,9 +109,10 @@ function saveUserCredentialsInLocalStorage() {
  * - generate the user profile part of the page
  */
 
-function updateUIOnUserLogin() {
+async function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
-
+  await getAndShowStoriesOnStart();
+  
   $allStoriesList.show();
 
   updateNavOnLogin();
