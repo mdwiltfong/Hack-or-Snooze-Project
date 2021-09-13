@@ -121,8 +121,8 @@ class StoryList {
         method:"POST",
         data:{token:user.loginToken}
       })
-      return {...result,id:storyId}
       console.log('Favorite Added')
+      return {...result,id:storyId}
     }catch(e){
       return e
     }
@@ -230,7 +230,8 @@ class User {
       throw Error(`Incorrect username or password`)
     }
   }
-
+  
+  
   /** When we already have credentials (token & username) for a user,
    *   we can log them in automatically. This function does that.
    */
@@ -258,6 +259,26 @@ class User {
         },
         token
       );
+    } catch (err) {
+      console.error("loginViaStoredCredentials failed", err);
+      return null;
+    }
+  }
+  static async getFavorites(token, username) {
+    try {
+      const response = await axios({
+        url: `${BASE_URL}/users/${username}`,
+        method: "GET",
+        params: {
+          token
+        },
+      });
+
+      let {
+        user
+      } = response.data;
+
+      return user.favorites
     } catch (err) {
       console.error("loginViaStoredCredentials failed", err);
       return null;

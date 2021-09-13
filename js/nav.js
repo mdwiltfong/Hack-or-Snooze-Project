@@ -45,7 +45,7 @@ function updateNavOnLogin() {
 function showStoryForm() {
   console.log(`show form`);
   $storyForm.show();
-  //$allStoriesList.hide();
+  
 
 }
 
