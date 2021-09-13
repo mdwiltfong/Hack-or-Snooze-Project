@@ -2,7 +2,7 @@
 
 // This is the global list of the stories, an instance of StoryList
 let storyList;
-let favorites=[];
+
 
 /** Get and show stories when site first loads. */
 
@@ -20,12 +20,22 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
-
+function generateStoryMarkup(story, favorites) {
+  console.debug("generateStoryMarkup", favorites);
   const hostName = story.getHostName();
+  let favoriteIds = [];
+  favorites.forEach((favStory) => {
+    
+    return favoriteIds.push(favStory.storyId);
+  })
+  console.log(favoriteIds)
+  console.log(story.storyId)
   let cls;
-  cls=favorites.includes(story.storyId) ? "fas":" ";
+  if (favoriteIds.includes(story.storyId)) {
+    cls = "fas"
+  } else {
+    cls = " "
+  }
   console.log(cls)
   return $(`
       <li id="${story.storyId}">
@@ -44,12 +54,19 @@ function generateStoryMarkup(story) {
 
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
+  let favorites;
+  if (currentUser) {
+    favorites = currentUser.favorites;
+    console.log(favorites)
+  } else {
+    favorites = [];
+  }
 
   $allStoriesList.empty();
 
   // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
-    const $story = generateStoryMarkup(story);
+    const $story = generateStoryMarkup(story, favorites);
     $allStoriesList.append($story);
   }
 
@@ -82,12 +99,12 @@ $storyForm.on('submit', (evt) => {
 
 async function changeIcon(evt) {
   console.log(`changeIcon`);
-  const $tg=$(evt.target);
+  const $tg = $(evt.target);
   const storyId = $tg.closest('li').attr('id');
   const $i = $tg.closest('i');
   $i.addClass('fas')
-  if(!favorites.includes(storyId)){
-    let favorite=await storyList.addFavorite(currentUser,storyId);
+  if (!favorites.includes(storyId)) {
+    let favorite = await storyList.addFavorite(currentUser, storyId);
     favorites.push(favorite.id)
   }
 }
