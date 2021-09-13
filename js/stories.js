@@ -25,7 +25,7 @@ function generateStoryMarkup(story, favorites) {
   const hostName = story.getHostName();
   let favoriteIds = [];
   favorites.forEach((favStory) => {
-    
+
     return favoriteIds.push(favStory.storyId);
   })
   console.log(favoriteIds)
@@ -102,10 +102,11 @@ async function changeIcon(evt) {
   const $tg = $(evt.target);
   const storyId = $tg.closest('li').attr('id');
   const $i = $tg.closest('i');
-  $i.addClass('fas')
-  if (!favorites.includes(storyId)) {
+  if ($i.attr('fas')) {
+    console.log(`Already a favorite`)
+  } else {
+    $i.addClass('fas')
     let favorite = await storyList.addFavorite(currentUser, storyId);
-    favorites.push(favorite.id)
   }
 }
 
