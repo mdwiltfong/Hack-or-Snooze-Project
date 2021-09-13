@@ -99,7 +99,9 @@ class StoryList {
         "story": {
           "author": author,
           "title": title,
-          "url": url
+          "url": "http://"+ url
+            //document.add to add the response to the list
+            // add something at the begining of the URL. 
         }
       }
     })

@@ -89,11 +89,16 @@ async function submitStory() {
   let result = await storyList.addStory(currentUser, newStory);
   $storyForm.slideUp("slow");
   $storyForm.trigger("reset");
+  let markUp=generateStoryMarkup(result,[]);
+  let $markUp=$(markUp);
+  console.log(markUp,$markUp)
+
+  $allStoriesList.prepend(markUp)
 }
 
 $storyForm.on('submit', (evt) => {
-  evt.preventDefault();
-  submitStory()
+  evt.preventDefault()
+  submitStory();  
 })
 
 
