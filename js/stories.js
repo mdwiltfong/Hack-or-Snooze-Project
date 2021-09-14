@@ -113,7 +113,7 @@ async function changeIcon(evt) {
   if ($i.attr('class').includes('fas')) {
     console.log(`Already a favorite`)
     $i.removeClass('fas');
-    currentUser.removeFavorite(currentUser, storyId, currentUser.loginToken);
+    currentUser.removeFavorite(storyId, currentUser.loginToken);
 
   } else {
     $i.addClass('fas')

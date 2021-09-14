@@ -293,10 +293,10 @@ class User {
       return null;
     }
   }
-  async removeFavorite(user, storyId, token) {
+  async removeFavorite(storyId, token) {
     try {
       let result = await axios({
-        url: `${BASE_URL}/users/${user.username}/favorites/${storyId}`,
+        url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
         method: "DELETE",
         data: {
           token
