@@ -106,6 +106,10 @@ async function changeIcon(evt) {
   const $tg = $(evt.target);
   const storyId = $tg.closest('li').attr('id');
   const $i = $tg.closest('i');
+  if(!currentUser){
+    alert(`You'll need to sign in to favoite an article :) `)
+    return;
+  }
   if ($i.attr('class').includes('fas')) {
     console.log(`Already a favorite`)
     $i.removeClass('fas');
