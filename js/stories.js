@@ -92,7 +92,6 @@ async function submitStory() {
   let markUp=generateStoryMarkup(result,[]);
   let $markUp=$(markUp);
   console.log(markUp,$markUp)
-
   $allStoriesList.prepend(markUp)
 }
 
@@ -107,13 +106,26 @@ async function changeIcon(evt) {
   const $tg = $(evt.target);
   const storyId = $tg.closest('li').attr('id');
   const $i = $tg.closest('i');
-  if ($i.attr('fas')) {
+  if ($i.attr('class').includes('fas')) {
     console.log(`Already a favorite`)
+    $i.removeClass('fas');
+    await removeFavorite(currentUser,storyId)
   } else {
     $i.addClass('fas')
     let favorite = await storyList.addFavorite(currentUser, storyId);
   }
 }
+async function removeFavorite(user,storyId){
+  try{
+    let result = await axios({
+      url:`${BASE_URL}/users/${user.username}/favorites/${storyId}`,
+      method:"DELETE",
+      data:{token:user.loginToken}
+    })
+    return result
+  }catch(e){
 
+  }
+}
 
 $('#all-stories-list').on('dblclick', changeIcon)
