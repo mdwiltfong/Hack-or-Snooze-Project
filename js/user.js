@@ -116,6 +116,7 @@ async function updateUIOnUserLogin() {
   await getAndShowStoriesOnStart();
   
   $allStoriesList.show();
+  $login.show()
 
   updateNavOnLogin();
 }

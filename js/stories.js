@@ -22,21 +22,22 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story, favorites) {
   console.debug("generateStoryMarkup", favorites);
+  
   const hostName = story.getHostName();
   let favoriteIds = [];
   favorites.forEach((favStory) => {
 
     return favoriteIds.push(favStory.storyId);
   })
-  console.log(favoriteIds)
-  console.log(story.storyId)
+
+
   let cls;
   if (favoriteIds.includes(story.storyId)) {
     cls = "fas"
   } else {
     cls = " "
   }
-  console.log(cls)
+
   return $(`
       <li id="${story.storyId}">
      <span class="star"><i class="far fa-star ${cls}"></i></span>
@@ -54,10 +55,11 @@ function generateStoryMarkup(story, favorites) {
 
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
+  
   let favorites;
   if (currentUser) {
     favorites = currentUser.favorites;
-    console.log(favorites)
+
   } else {
     favorites = [];
   }
@@ -65,10 +67,12 @@ function putStoriesOnPage() {
   $allStoriesList.empty();
 
   // loop through all of our stories and generate HTML for them
+  console.groupCollapsed()
   for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story, favorites);
     $allStoriesList.append($story);
   }
+  console.groupEnd()
 
   $allStoriesList.show();
 }
@@ -85,13 +89,12 @@ async function submitStory() {
     url: `${form[0][2].value}`
   }
 
-  console.log(newStory)
+
   let result = await storyList.addStory(currentUser, newStory);
   $storyForm.slideUp("slow");
   $storyForm.trigger("reset");
   let markUp = generateStoryMarkup(result, []);
   let $markUp = $(markUp);
-  console.log(markUp, $markUp)
   $allStoriesList.prepend(markUp)
 }
 
@@ -102,7 +105,7 @@ $storyForm.on('submit', (evt) => {
 
 
 async function changeIcon(evt) {
-  console.log(`changeIcon`);
+  console.debug(`changeIcon`);
   const $tg = $(evt.target);
   const storyId = $tg.closest('li').attr('id');
   const $i = $tg.closest('i');
@@ -111,7 +114,6 @@ async function changeIcon(evt) {
     return;
   }
   if ($i.attr('class').includes('fas')) {
-    console.log(`Already a favorite`)
     $i.removeClass('fas');
     currentUser.removeFavorite(storyId, currentUser.loginToken);
 

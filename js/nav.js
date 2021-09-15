@@ -12,6 +12,7 @@ function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
   putStoriesOnPage();
+  $navLogin.removeClass('hidden');
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -21,8 +22,9 @@ $body.on("click", "#nav-all", navAllStories);
 function navLoginClick(evt) {
   console.debug("navLoginClick", evt);
   hidePageComponents();
-  $loginForm.show();
-  $signupForm.show();
+  $loginForm.show()
+  $signupForm.show()
+  //$signupForm.toggle();
 }
 
 $navLogin.on("click", navLoginClick);
@@ -32,23 +34,21 @@ $navLogin.on("click", navLoginClick);
 function updateNavOnLogin() {
   console.debug("updateNavOnLogin");
   $(".main-nav-links").show();
+  $navUserProfile.text(`${currentUser.username}`).show();
+
   $navLogin.hide();
   $navLogOut.show();
-  $navUserProfile.text(`${currentUser.username}`).show();
   $loginForm.hide();
   $signupForm.hide();
-  $navSubmit.show()
+  $login.show()
+  $nav_login.show()
 }
 
 //** Update DOM to show Story Form */
 
 function showStoryForm() {
-  console.log(`show form`);
-  $storyForm.show();
-  
-
+  console.debug(`show form`);
+  //$storyForm.toggle()
 }
 
-$navSubmit.on('click',showStoryForm)
-
-
+$navSubmit.on('click', showStoryForm)
