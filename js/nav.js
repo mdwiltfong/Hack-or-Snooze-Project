@@ -48,7 +48,9 @@ function updateNavOnLogin() {
 
 function showStoryForm() {
   console.debug(`show form`);
-  $storyForm.show()
+  $storyForm.toggle(()=>{
+    $storyForm.slide()
+  })
 }
 
 $navSubmit.on('click', showStoryForm)

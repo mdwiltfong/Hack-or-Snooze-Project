@@ -102,6 +102,13 @@ $storyForm.on('submit', (evt) => {
   evt.preventDefault()
   submitStory();
 })
+/** Remove Story from Form  */
+
+async function removeStory(storyId) {
+  console.debug('removeStory');
+  await storyList.removeStory(storyId,currentUser.loginToken)
+}
+
 
 
 async function changeIcon(evt) {

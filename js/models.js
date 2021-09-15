@@ -67,6 +67,7 @@ class StoryList {
       method: "GET",
     });
 
+  
     // turn plain old story objects from API into instances of Story class
     const stories = response.data.stories.map(story => new Story(story));
 
@@ -116,7 +117,15 @@ class StoryList {
 
     })
   }
-  
+  async removeStory(storyId,token){
+    const response= await axios({
+      url:`${BASE_URL}/stories/${storyId}`,
+      method:"DELETE",
+      data: {
+        token
+      }
+    })
+  }
 
 
 }
@@ -290,14 +299,15 @@ class User {
       return e
     }
   }
-  async addFavorite(storyId,token) {
+  async addFavorite(storyId, token) {
     try {
       let result = await axios({
         url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
         method: "POST",
         data: {
-          token:token,
-      }})
+          token: token,
+        }
+      })
       console.log('Favorite Added')
       return {
         ...result,
