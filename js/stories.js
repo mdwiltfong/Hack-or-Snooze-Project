@@ -22,7 +22,7 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story, favorites) {
   console.debug("generateStoryMarkup", favorites);
-  
+
   const hostName = story.getHostName();
   let favoriteIds = [];
   favorites.forEach((favStory) => {
@@ -39,6 +39,7 @@ function generateStoryMarkup(story, favorites) {
   }
 
   return $(`
+  <section id="${story.storyId}">
       <li id="${story.storyId}">
      <span class="star"><i class="far fa-star ${cls}"></i></span>
         <a href="${story.url}" target="a_blank" class="story-link">
@@ -48,6 +49,8 @@ function generateStoryMarkup(story, favorites) {
         <small class="story-author">by ${story.author}</small>
         <small class="story-user">posted by ${story.username}</small>
       </li>
+      <button type="button" id="${story.storyId}" class="btn btn-primary">Remove</button>
+     </section> 
     `);
 }
 
@@ -55,7 +58,7 @@ function generateStoryMarkup(story, favorites) {
 
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
-  
+
   let favorites;
   if (currentUser) {
     favorites = currentUser.favorites;
@@ -76,6 +79,7 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
 
 
 /** Submit story from form */
@@ -104,11 +108,22 @@ $storyForm.on('submit', (evt) => {
 })
 /** Remove Story from Form  */
 
-async function removeStory(storyId) {
-  console.debug('removeStory');
-  await storyList.removeStory(storyId,currentUser.loginToken)
-}
+async function removeStory(evt) {
+  try {
+    console.log('removeStory');
+    console.log(evt)
+    let $tg = $(evt.target);
+    let storyId = $tg.attr('id')
+    console.log(storyId)
+    let response = await storyList.removeStory(storyId, currentUser.loginToken)
+    let $section = $(`section[id="${storyId}"]`);
+    $section.remove();
+    return response
 
+  } catch (e) {
+    return e
+  }
+}
 
 
 async function changeIcon(evt) {
@@ -116,6 +131,7 @@ async function changeIcon(evt) {
   const $tg = $(evt.target);
   const storyId = $tg.closest('li').attr('id');
   const $i = $tg.closest('i');
+  console.log(storyId)
   if (!currentUser) {
     alert(`You'll need to sign in to favoite an article :) `)
     return;
@@ -126,21 +142,23 @@ async function changeIcon(evt) {
 
   } else {
     $i.addClass('fas')
-    let favorite = await currentUser.addFavorite(storyId,currentUser.loginToken);
+    let favorite = await currentUser.addFavorite(storyId, currentUser.loginToken);
   }
 }
-/*
-async function removeFavorite(user,storyId){
-  try{
-    let result = await axios({
-      url:`${BASE_URL}/users/${user.username}/favorites/${storyId}`,
-      method:"DELETE",
-      data:{token:user.loginToken}
-    })
-    return result
-  }catch(e){
 
-  }
+
+function eventAssignment(){
+  $('button[id]').on('click', (evt) => {
+    console.log(removeStory(evt))
+  })
+  $('i').on('click',(evt)=>{
+    changeIcon(evt)
+  })
 }
-*/
-$('#all-stories-list').on('dblclick', changeIcon)
+
+$('body').on('change',()=>{
+  console.log('change')
+  setTimeout(eventAssignment,1000)
+})
+
+setTimeout(eventAssignment,1000)

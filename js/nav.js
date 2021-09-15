@@ -15,7 +15,7 @@ function navAllStories(evt) {
   $navLogin.removeClass('hidden');
 }
 
-$body.on("click", "#nav-all", navAllStories);
+
 
 /** Show login/signup on click on "login" */
 
@@ -48,9 +48,7 @@ function updateNavOnLogin() {
 
 function showStoryForm() {
   console.debug(`show form`);
-  $storyForm.toggle(()=>{
-    $storyForm.slide()
-  })
+  $storyForm.slideToggle()
 }
 
 $navSubmit.on('click', showStoryForm)
