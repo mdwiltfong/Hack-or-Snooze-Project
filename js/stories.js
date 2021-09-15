@@ -144,11 +144,9 @@ $storyForm.on('submit', (evt) => {
 
 async function removeStory(evt) {
   try {
-    console.log('removeStory');
-    console.log(evt)
+   
     let $tg = $(evt.target);
     let storyId = $tg.attr('id')
-    console.log(storyId)
     let response = await storyList.removeStory(storyId, currentUser.loginToken)
     let $section = $(`section[id="${storyId}"]`);
     $section.remove();
@@ -165,7 +163,6 @@ async function changeIcon(evt) {
   const $tg = $(evt.target);
   const storyId = $tg.closest('li').attr('id');
   const $i = $tg.closest('i');
-  console.log(storyId)
   if (!currentUser) {
     alert(`You'll need to sign in to favoite an article :) `)
     return;
@@ -183,7 +180,7 @@ async function changeIcon(evt) {
 
 function eventAssignment() {
   $('button[id]').on('click', (evt) => {
-    console.log(removeStory(evt))
+    removeStory(evt)
   })
   $('i').on('click', (evt) => {
     changeIcon(evt)
@@ -191,7 +188,7 @@ function eventAssignment() {
 }
 
 $('body').on('change', () => {
-  console.log('change')
+  
   setTimeout(eventAssignment, 1000)
 })
 
