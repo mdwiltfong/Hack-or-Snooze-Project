@@ -99,9 +99,9 @@ class StoryList {
         "story": {
           "author": author,
           "title": title,
-          "url": "http://"+ url
-            //document.add to add the response to the list
-            // add something at the begining of the URL. 
+          "url": "http://" + url
+          //document.add to add the response to the list
+          // add something at the begining of the URL. 
         }
       }
     })
@@ -116,21 +116,9 @@ class StoryList {
 
     })
   }
-  async addFavorite(user, storyId) {
-    try{
-      let result = await axios({
-        url:`${BASE_URL}/users/${user.username}/favorites/${storyId}`,
-        method:"POST",
-        data:{token:user.loginToken}
-      })
-      console.log('Favorite Added')
-      return {...result,id:storyId}
-    }catch(e){
-      return e
-    }
-  }
+  
 
- 
+
 }
 
 /******************************************************************************
@@ -234,8 +222,8 @@ class User {
       throw Error(`Incorrect username or password`)
     }
   }
-  
-  
+
+
   /** When we already have credentials (token & username) for a user,
    *   we can log them in automatically. This function does that.
    */
@@ -286,6 +274,37 @@ class User {
     } catch (err) {
       console.error("loginViaStoredCredentials failed", err);
       return null;
+    }
+  }
+  async removeFavorite(storyId, token) {
+    try {
+      let result = await axios({
+        url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
+        method: "DELETE",
+        data: {
+          token
+        }
+      })
+      return result
+    } catch (e) {
+      return e
+    }
+  }
+  async addFavorite(storyId,token) {
+    try {
+      let result = await axios({
+        url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
+        method: "POST",
+        data: {
+          token:token,
+      }})
+      console.log('Favorite Added')
+      return {
+        ...result,
+        id: storyId
+      }
+    } catch (e) {
+      return e
     }
   }
 }

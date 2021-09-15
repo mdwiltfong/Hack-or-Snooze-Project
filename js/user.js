@@ -83,6 +83,7 @@ async function checkForRememberedUser() {
 
   // try to log in with these credentials (will be null if login failed)
   currentUser = await User.loginViaStoredCredentials(token, username);
+  
 }
 
 /** Sync current user information to localStorage.

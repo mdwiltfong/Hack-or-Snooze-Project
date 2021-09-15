@@ -89,15 +89,15 @@ async function submitStory() {
   let result = await storyList.addStory(currentUser, newStory);
   $storyForm.slideUp("slow");
   $storyForm.trigger("reset");
-  let markUp=generateStoryMarkup(result,[]);
-  let $markUp=$(markUp);
-  console.log(markUp,$markUp)
+  let markUp = generateStoryMarkup(result, []);
+  let $markUp = $(markUp);
+  console.log(markUp, $markUp)
   $allStoriesList.prepend(markUp)
 }
 
 $storyForm.on('submit', (evt) => {
   evt.preventDefault()
-  submitStory();  
+  submitStory();
 })
 
 
@@ -106,19 +106,21 @@ async function changeIcon(evt) {
   const $tg = $(evt.target);
   const storyId = $tg.closest('li').attr('id');
   const $i = $tg.closest('i');
-  if(!currentUser){
+  if (!currentUser) {
     alert(`You'll need to sign in to favoite an article :) `)
     return;
   }
   if ($i.attr('class').includes('fas')) {
     console.log(`Already a favorite`)
     $i.removeClass('fas');
-    await removeFavorite(currentUser,storyId)
+    currentUser.removeFavorite(storyId, currentUser.loginToken);
+
   } else {
     $i.addClass('fas')
-    let favorite = await storyList.addFavorite(currentUser, storyId);
+    let favorite = await currentUser.addFavorite(storyId,currentUser.loginToken);
   }
 }
+/*
 async function removeFavorite(user,storyId){
   try{
     let result = await axios({
@@ -131,5 +133,5 @@ async function removeFavorite(user,storyId){
 
   }
 }
-
+*/
 $('#all-stories-list').on('dblclick', changeIcon)
