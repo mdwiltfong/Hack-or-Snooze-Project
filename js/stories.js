@@ -80,7 +80,41 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+async function putFavoritesOnPage() {
+  console.debug('putFavoritesOnPage');
+  try {
 
+
+    let favorites = await User.getFavorites(currentUser.loginToken, currentUser.username);
+
+
+    $allStoriesList.empty();
+    
+
+    // loop through all of our stories and generate HTML for them
+  
+    favorites.forEach((favorite) => {
+          let $markup = $(`
+      <section id="${favorite.storyId}">
+          <li id="${favorite.storyId}">
+         <span class="star"><i class="far fa-star fas"></i></span>
+            <a href="${favorite.url}" target="a_blank" class="story-link">
+              ${favorite.title}
+            </a>
+            <small class="story-hostname">(${favorite.url})</small>
+            <small class="story-author">by ${favorite.author}</small>
+            <small class="story-user">posted by ${favorite.username}</small>
+          </li>
+         </section> 
+        `);
+      $allStoriesList.append($markup)
+    })
+    return $markUp
+
+  } catch (e) {
+    return e
+  }
+}
 
 /** Submit story from form */
 
@@ -147,18 +181,20 @@ async function changeIcon(evt) {
 }
 
 
-function eventAssignment(){
+function eventAssignment() {
   $('button[id]').on('click', (evt) => {
     console.log(removeStory(evt))
   })
-  $('i').on('click',(evt)=>{
+  $('i').on('click', (evt) => {
     changeIcon(evt)
   })
 }
 
-$('body').on('change',()=>{
+$('body').on('change', () => {
   console.log('change')
-  setTimeout(eventAssignment,1000)
+  setTimeout(eventAssignment, 1000)
 })
 
-setTimeout(eventAssignment,1000)
+setTimeout(eventAssignment, 1000)
+
+$favPage.on('click', putFavoritesOnPage)

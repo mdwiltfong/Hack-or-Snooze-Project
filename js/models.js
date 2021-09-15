@@ -30,9 +30,13 @@ class Story {
 
   /** Parses hostname out of URL and returns it. */
 
-  getHostName() {
+  getHostName(url) {
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    
+    /*let domain = new URL(url);
+    domain=domain.hostname */
+    
+    return `hostname.com`;
   }
 
 }
