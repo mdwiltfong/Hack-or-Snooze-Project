@@ -37,7 +37,8 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
   $loginForm.hide();
   $signupForm.hide();
-  $navSubmit.show()
+  $login.show()
+
 }
 
 //** Update DOM to show Story Form */
@@ -45,8 +46,6 @@ function updateNavOnLogin() {
 function showStoryForm() {
   console.log(`show form`);
   $storyForm.show();
-  
-
 }
 
 $navSubmit.on('click',showStoryForm)
