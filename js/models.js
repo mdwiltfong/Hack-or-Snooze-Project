@@ -298,6 +298,8 @@ class User {
           token
         }
       })
+      
+      result=result.data.user.favorites
       return result
     } catch (e) {
       return e
