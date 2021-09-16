@@ -51,4 +51,6 @@ function showStoryForm() {
   $storyForm.slideToggle()
 }
 
-$navSubmit.on('click', showStoryForm)
+$navSubmit.on('click', showStoryForm);
+
+$nav_brand.on('click',start)

@@ -89,7 +89,7 @@ async function putFavoritesOnPage() {
 
     $allStoriesList.empty();
 
-    if (favorites) {
+    if (favorites == []) {
       let msg = '<p>Hmm, you have no favorites</p>';
       $allStoriesList.append(msg)
       return;
@@ -184,6 +184,7 @@ async function changeIcon(evt) {
 
 function eventAssignment() {
   $('button[id]').on('click', (evt) => {
+    
     removeStory(evt)
   })
   $('i').on('click', (evt) => {
@@ -191,11 +192,17 @@ function eventAssignment() {
   })
 }
 
-$('body').on('change', () => {
-
-  setTimeout(eventAssignment, 1000)
-})
-
-setTimeout(eventAssignment, 1000)
-
 $favPage.on('click', putFavoritesOnPage)
+
+$('#all-stories-list').on('click',(evt)=>{
+  
+  if(evt.target.type == 'button'){
+    removeStory(evt)
+  }
+  if(evt.target.attributes[0].value == "far fa-star fas" || "far fa-star"){
+    changeIcon(evt)
+  }
+
+
+
+})
