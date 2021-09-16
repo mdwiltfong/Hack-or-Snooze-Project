@@ -173,7 +173,7 @@ async function changeIcon(evt) {
   }
   if ($i.attr('class').includes('fas')) {
     $i.removeClass('fas');
-    currentUser.removeFavorite(storyId, currentUser.loginToken);
+    return currentUser.removeFavorite(storyId, currentUser.loginToken);
 
   } else {
     $i.addClass('fas')
@@ -182,13 +182,13 @@ async function changeIcon(evt) {
 }
 $favPage.on('click', putFavoritesOnPage)
 
-$('#all-stories-list').on('click',(evt)=>{
+$('#all-stories-list').on('click',async (evt)=>{
   
   if(evt.target.type == 'button'){
     removeStory(evt)
   }
   if(evt.target.attributes[0].value == "far fa-star fas" || "far fa-star"){
-    changeIcon(evt)
+    currentUser.favorites = await changeIcon(evt)
   }
 
 
