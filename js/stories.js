@@ -84,7 +84,7 @@ async function putFavoritesOnPage() {
   console.debug('putFavoritesOnPage');
   try {
 
-
+    
     let favorites = await User.getFavorites(currentUser.loginToken, currentUser.username);
 
     $allStoriesList.empty();
@@ -180,18 +180,6 @@ async function changeIcon(evt) {
     let favorite = await currentUser.addFavorite(storyId, currentUser.loginToken);
   }
 }
-
-
-function eventAssignment() {
-  $('button[id]').on('click', (evt) => {
-    
-    removeStory(evt)
-  })
-  $('i').on('click', (evt) => {
-    changeIcon(evt)
-  })
-}
-
 $favPage.on('click', putFavoritesOnPage)
 
 $('#all-stories-list').on('click',(evt)=>{
