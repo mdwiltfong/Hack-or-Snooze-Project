@@ -87,14 +87,18 @@ async function putFavoritesOnPage() {
 
     let favorites = await User.getFavorites(currentUser.loginToken, currentUser.username);
 
-
     $allStoriesList.empty();
-    
+
+    if (favorites) {
+      let msg = '<p>Hmm, you have no favorites</p>';
+      $allStoriesList.append(msg)
+      return;
+    }
 
     // loop through all of our stories and generate HTML for them
-  
+
     favorites.forEach((favorite) => {
-          let $markup = $(`
+      let $markup = $(`
       <section id="${favorite.storyId}">
           <li id="${favorite.storyId}">
          <span class="star"><i class="far fa-star fas"></i></span>
@@ -144,7 +148,7 @@ $storyForm.on('submit', (evt) => {
 
 async function removeStory(evt) {
   try {
-   
+
     let $tg = $(evt.target);
     let storyId = $tg.attr('id')
     let response = await storyList.removeStory(storyId, currentUser.loginToken)
@@ -188,7 +192,7 @@ function eventAssignment() {
 }
 
 $('body').on('change', () => {
-  
+
   setTimeout(eventAssignment, 1000)
 })
 
