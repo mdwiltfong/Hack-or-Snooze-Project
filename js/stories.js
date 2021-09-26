@@ -133,6 +133,7 @@ async function submitStory() {
 
 
   let result = await storyList.addStory(currentUser, newStory);
+  currentUser.ownStories = result;
   $storyForm.slideUp("slow");
   $storyForm.trigger("reset");
   let markUp = generateStoryMarkup(result, []);
@@ -152,8 +153,11 @@ async function removeStory(evt) {
     let $tg = $(evt.target);
     let storyId = $tg.attr('id')
     let response = await storyList.removeStory(storyId, currentUser.loginToken)
+    currentUser.ownStories= currentUser.ownStories.filter(s => s.storyId !== storyId)
+    console.log(currentUser.ownStories)
     let $section = $(`section[id="${storyId}"]`);
     $section.remove();
+
     return response
 
   } catch (e) {
@@ -186,6 +190,7 @@ $('#all-stories-list').on('click',async (evt)=>{
   
   if(evt.target.type == 'button'){
     removeStory(evt)
+    return;
   }
   if(evt.target.attributes[0].value == "far fa-star fas" || "far fa-star"){
     currentUser.favorites = await changeIcon(evt)

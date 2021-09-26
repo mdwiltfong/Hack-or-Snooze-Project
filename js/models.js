@@ -36,7 +36,7 @@ class Story {
     /*let domain = new URL(url);
     domain=domain.hostname */
     
-    return `hostname.com`;
+    return new URL(this.url).host;
   }
 
 }
@@ -105,12 +105,11 @@ class StoryList {
           "author": author,
           "title": title,
           "url": "http://" + url
-          //document.add to add the response to the list
-          // add something at the begining of the URL. 
         }
       }
     })
     let data = result.data.story
+    
     return new Story({
       storyId: data.storyId,
       title: data.title,
