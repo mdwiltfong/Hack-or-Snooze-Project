@@ -95,7 +95,7 @@ class StoryList {
       author,
       url
     } = newStory;
-
+  
     let result = await axios({
       method: 'POST',
       url: `${BASE_URL}/stories`,
@@ -304,22 +304,5 @@ class User {
       return e
     }
   }
-  async addFavorite(storyId, token) {
-    try {
-      let result = await axios({
-        url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
-        method: "POST",
-        data: {
-          token: token,
-        }
-      })
-      console.log('Favorite Added')
-      return {
-        ...result,
-        id: storyId
-      }
-    } catch (e) {
-      return e
-    }
-  }
+  
 }
