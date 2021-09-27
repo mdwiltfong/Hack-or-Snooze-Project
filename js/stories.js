@@ -177,7 +177,7 @@ async function changeIcon(evt) {
 
   } else {
     $i.addClass('fas')
-    let favorite = await currentUser.addFavorite(storyId, currentUser.loginToken);
+    let favorite =  currentUser.addFavorite(storyId, currentUser.loginToken);
   }
 }
 $favPage.on('click', putFavoritesOnPage)
