@@ -114,9 +114,7 @@ function saveUserCredentialsInLocalStorage() {
 async function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
   await getAndShowStoriesOnStart();
-  
-  $allStoriesList.show();
-  $login.show()
-
+   // $allStoriesList.show();
+ // $login.show()
   updateNavOnLogin();
 }
